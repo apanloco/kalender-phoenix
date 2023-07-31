@@ -1,0 +1,62 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: kalender
+  labels:
+    app: kalender
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: kalender
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kalender
+  template:
+    metadata:
+      labels:
+        app: kalender
+    spec:
+      containers:
+        - name: kalender
+          image: arn.ocir.io/axiirc3u3iv6/kalender:latest
+          imagePullPolicy: Always
+          env:
+            - name: SECRET_KEY_BASE
+              valueFrom:
+                secretKeyRef:
+                  name: secret-key-base
+                  key: SECRET_KEY_BASE
+      imagePullSecrets:
+        - name: ocirsecret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kalender
+  labels:
+    app: kalender
+spec:
+  ports:
+    - port: 4000
+      name: kalender
+  selector:
+    app: kalender
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: app-tls
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`kalender.akerud.se`)
+      services:
+        - name: kalender
+          port: 4000
+  tls:
+    certResolver: le
