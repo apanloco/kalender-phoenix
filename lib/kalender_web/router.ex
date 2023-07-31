@@ -17,7 +17,7 @@ defmodule KalenderWeb.Router do
   scope "/", KalenderWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    get "/", KalenderController, :home
     get "/:year/:month", KalenderController, :index
   end
 

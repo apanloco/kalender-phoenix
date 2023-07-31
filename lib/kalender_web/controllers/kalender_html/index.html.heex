@@ -1,3 +1,117 @@
+<% m_int = String.to_integer(@month)
+y_int = String.to_integer(@year) %>
+<br />
 <section>
-    <h2>get <%= @year <> " " <> @month %></h2>
+  <table class="w-10/12 font-semibold text-center mx-auto table-fixed mb-0.5">
+    <thead>
+      <tr>
+        <td class="bg-gray-100 border border-gray-400">
+          <%= @year %>
+        </td>
+      </tr>
+    </thead>
+  </table>
+  <table class="w-10/12 font-semibold text-center mx-auto table-fixed mb-4">
+    <thead>
+      <tr>
+        <td class="bg-gray-100 border border-gray-400">
+          <% y = if m_int == 1, do: y_int - 1, else: y_int
+          m = if m_int == 1, do: 12, else: m_int - 1 %>
+          <a href={"/#{y}/#{m}"} class="block">˱</a>
+        </td>
+        <%= for {m, i} <- Enum.with_index(["Januari", "Februari", "Mars", "April", "Maj", "Juni", "Juli", "Augusti", "September", "Oktober", "November", "December"], 1) do %>
+          <td class={"#{if i == m_int, do: 'bg-blue-200', else: 'bg-gray-100'} border border-gray-400"}>
+            <a href={"/#{@year}/#{i}"} class="block"><%= m %></a>
+          </td>
+        <% end %>
+        <td class="bg-gray-100 border border-gray-400">
+          <% y = if m_int == 12, do: y_int + 1, else: y_int
+          m = if m_int == 12, do: 1, else: m_int + 1 %>
+          <a href={"/#{y}/#{m}"} class="block">˲</a>
+        </td>
+      </tr>
+    </thead>
+  </table>
+  <table class="w-10/12 text-center mx-auto table-fixed">
+    <thead>
+      <tr>
+        <td class="font-semibold w-2/12 bg-gray-100 border border-gray-400">
+          Vecka
+        </td>
+        <%= for day <- ["Måndag", "Tisdag", "Onsdag", "Torsdag", "Fredag", "Lördag", "Söndag"] do %>
+          <td class="font-semibold w-5/12 bg-gray-100 border border-gray-400">
+            <%= day %>
+          </td>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <%= for %{"week" => week, "days" => days} <- @data["weeks"] do %>
+        <tr>
+          <td class="w-2/12 border border-gray-400 font-bold">
+            <%= "#{week}" %>
+          </td>
+          <%= for day <- days do %>
+            <% is_same_month = day["date"]["month"] == m_int
+            is_off = Map.has_key?(day, "off")
+
+            bg_class =
+              cond do
+                is_off == true && is_same_month == false ->
+                  "bg-red-200 opacity-50"
+
+                is_off == true && is_same_month == true ->
+                  "bg-red-200"
+
+                is_off == false && is_same_month == false ->
+                  "bg-gray-200 opacity-50"
+
+                true ->
+                  ""
+              end %>
+            <td class={"w-5/12 align-text-top text-black p-1 border border-gray-400 #{bg_class}"}>
+              <div class="flex justify-between">
+                <% d =
+                  if day["date"]["day"] == 1 do
+                    "#{Month.to_name(day["date"]["month"])} #{day["date"]["year"]}"
+                  else
+                    day["date"]["day"]
+                  end
+
+                d_class =
+                  if day["date"]["day"] == 1 do
+                    "font-bold text-xl underline"
+                  else
+                    "font-bold"
+                  end %>
+                <span class={"#{d_class}"}><%= d %></span>
+                <%= if Map.has_key?(day, "flagday") do %>
+                  <span title={"#{day["flagday"]}"} class="text-lg">🇸🇪&nbsp</span>
+                <% end %>
+              </div>
+              <%= if Map.has_key?(day, "name") do %>
+                <div class="text-left font-medium">
+                  <%= day["name"] %>
+                </div>
+              <% else %>
+                <br />
+              <% end %>
+              <br />
+              <br />
+              <%= if Map.has_key?(day, "name_days") do %>
+                <div class="text-left align-text-bottom text-sm italic">
+                  <%= Enum.join(day["name_days"], ", ") %>
+                </div>
+              <% else %>
+                <br />
+              <% end %>
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 </section>
+<!--<br />
+<hr />
+<pre><%= inspect(@data, pretty: true) %></pre>-->
