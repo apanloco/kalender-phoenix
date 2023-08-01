@@ -1,8 +1,7 @@
 <% m_int = String.to_integer(@month)
 y_int = String.to_integer(@year) %>
-<br />
 <section>
-  <table class="w-10/12 font-semibold text-center mx-auto table-fixed">
+  <table class="w-10/12 font-semibold text-center mx-auto table-fixed mt-4">
     <thead>
       <tr>
         <td class="">
@@ -89,22 +88,22 @@ y_int = String.to_integer(@year) %>
                   <span title={"#{day["flagday"]}"} class="text-xl">🇸🇪&nbsp</span>
                 <% end %>
               </div>
-              <%= if Map.has_key?(day, "name") do %>
-                <div class="text-left font-medium">
+              <div class="text-left font-medium">
+                <%= if Map.has_key?(day, "name") do %>
                   <%= day["name"] %>
-                </div>
-              <% else %>
-                <br />
-              <% end %>
+                <% else %>
+                  &nbsp
+                <% end %>
+              </div>
               <br />
               <br />
-              <%= if Map.has_key?(day, "name_days") do %>
-                <div class="text-left align-text-bottom text-sm italic">
+              <div class="text-left align-text-bottom text-sm italic">
+                <%= if Map.has_key?(day, "name_days") do %>
                   <%= Enum.join(day["name_days"], ", ") %>
-                </div>
-              <% else %>
-                <br />
-              <% end %>
+                <% else %>
+                  &nbsp
+                <% end %>
+              </div>
             </td>
           <% end %>
         </tr>
@@ -112,6 +111,3 @@ y_int = String.to_integer(@year) %>
     </tbody>
   </table>
 </section>
-<!--<br />
-<hr />
-<pre><%= inspect(@data, pretty: true) %></pre>-->
