@@ -14,17 +14,17 @@ y_int = String.to_integer(@year) %>
   <table class="w-10/12 font-semibold text-center mx-auto table-fixed mb-4">
     <thead>
       <tr>
-        <td class="bg-gray-100 border border-gray-400">
+        <td class="w-1/12 bg-gray-100 border border-gray-400">
           <% y = if m_int == 1, do: y_int - 1, else: y_int
           m = if m_int == 1, do: 12, else: m_int - 1 %>
           <a href={"/#{y}/#{m}"} class="block">&lt;</a>
         </td>
         <%= for {m, i} <- Enum.with_index(["Januari", "Februari", "Mars", "April", "Maj", "Juni", "Juli", "Augusti", "September", "Oktober", "November", "December"], 1) do %>
-          <td class={"#{if i == m_int, do: 'bg-blue-200', else: 'bg-gray-100'} border border-gray-400"}>
+          <td class={"w-3/12 #{if i == m_int, do: 'bg-blue-200', else: 'bg-gray-100'} border border-gray-400"}>
             <a href={"/#{@year}/#{i}"} class="block"><%= m %></a>
           </td>
         <% end %>
-        <td class="bg-gray-100 border border-gray-400">
+        <td class="w-1/12 bg-gray-100 border border-gray-400">
           <% y = if m_int == 12, do: y_int + 1, else: y_int
           m = if m_int == 12, do: 1, else: m_int + 1 %>
           <a href={"/#{y}/#{m}"} class="block">&gt;</a>
