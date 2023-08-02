@@ -2,8 +2,16 @@
 y_next = if @month == 12, do: @year + 1, else: @year
 m_prev = if @month == 1, do: 12, else: @month - 1
 m_next = if @month == 12, do: 1, else: @month + 1 %>
-<section>
-  <table class="w-10/12 font-semibold text-center mx-auto table-fixed mt-4">
+<section class="font-semibold">
+  <!--
+██╗   ██╗███████╗ █████╗ ██████╗ 
+╚██╗ ██╔╝██╔════╝██╔══██╗██╔══██╗
+ ╚████╔╝ █████╗  ███████║██████╔╝
+  ╚██╔╝  ██╔══╝  ██╔══██║██╔══██╗
+   ██║   ███████╗██║  ██║██║  ██║
+   ╚═╝   ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝
+  -->
+  <table class="w-10/12 mx-auto table-fixed mt-4 text-center">
     <thead>
       <tr>
         <td class="">
@@ -12,7 +20,15 @@ m_next = if @month == 12, do: 1, else: @month + 1 %>
       </tr>
     </thead>
   </table>
-  <table class="w-10/12 font-semibold text-center mx-auto table-fixed mb-4">
+  <!--  
+███╗   ███╗ ██████╗ ███╗   ██╗████████╗██╗  ██╗███████╗
+████╗ ████║██╔═══██╗████╗  ██║╚══██╔══╝██║  ██║██╔════╝
+██╔████╔██║██║   ██║██╔██╗ ██║   ██║   ███████║███████╗
+██║╚██╔╝██║██║   ██║██║╚██╗██║   ██║   ██╔══██║╚════██║
+██║ ╚═╝ ██║╚██████╔╝██║ ╚████║   ██║   ██║  ██║███████║
+╚═╝     ╚═╝ ╚═════╝ ╚═╝  ╚═══╝   ╚═╝   ╚═╝  ╚═╝╚══════╝ 
+  -->
+  <table class="w-10/12 text-center mx-auto table-fixed mb-4">
     <thead>
       <tr>
         <td class="w-1/12 bg-gray-100 border border-gray-400">
@@ -29,14 +45,22 @@ m_next = if @month == 12, do: 1, else: @month + 1 %>
       </tr>
     </thead>
   </table>
-  <table class="w-10/12 text-center mx-auto table-fixed">
+  <!--
+ ██████╗ █████╗ ██╗     ███████╗███╗   ██╗██████╗  █████╗ ██████╗ 
+██╔════╝██╔══██╗██║     ██╔════╝████╗  ██║██╔══██╗██╔══██╗██╔══██╗
+██║     ███████║██║     █████╗  ██╔██╗ ██║██║  ██║███████║██████╔╝
+██║     ██╔══██║██║     ██╔══╝  ██║╚██╗██║██║  ██║██╔══██║██╔══██╗
+╚██████╗██║  ██║███████╗███████╗██║ ╚████║██████╔╝██║  ██║██║  ██║
+ ╚═════╝╚═╝  ╚═╝╚══════╝╚══════╝╚═╝  ╚═══╝╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝
+  -->
+  <table class="font-semibold w-10/12 text-center mx-auto table-fixed border border-gray-400">
     <thead>
       <tr>
-        <td class="font-semibold w-2/12 bg-gray-100 border border-gray-400">
+        <td class="w-2/12 bg-gray-100 border border-gray-400">
           Vecka
         </td>
         <%= for day <- ["Måndag", "Tisdag", "Onsdag", "Torsdag", "Fredag", "Lördag", "Söndag"] do %>
-          <td class="font-semibold w-5/12 bg-gray-100 border border-gray-400">
+          <td class="w-5/12 bg-gray-100 border border-gray-400">
             <%= day %>
           </td>
         <% end %>
@@ -66,27 +90,41 @@ m_next = if @month == 12, do: 1, else: @month + 1 %>
                 true ->
                   ""
               end %>
-            <td class={"w-5/12 align-text-top text-black p-1 border border-gray-400 #{bg_class}"}>
-              <div class="flex justify-between">
-                <% d =
-                  if day["date"]["day"] == 1 do
-                    "#{Month.to_name(day["date"]["month"])}"
-                  else
-                    day["date"]["day"]
-                  end
+            <td class={"w-5/12  border border-gray-400 #{bg_class}"}>
+              <% d =
+                if day["date"]["day"] == 1 do
+                  "#{Month.to_name(day["date"]["month"])}"
+                else
+                  day["date"]["day"]
+                end
 
-                d_class =
-                  if day["date"]["day"] == 1 do
-                    "font-bold text-xl"
-                  else
-                    "font-bold"
-                  end %>
-                <span class={"#{d_class} text-xl"}><%= d %></span>
-                <%= if Map.has_key?(day, "flagday") do %>
-                  <span title={"#{day["flagday"]}"} class="text-xl">🇸🇪&nbsp</span>
-                <% end %>
-              </div>
-              <div class="text-left font-medium">
+              d_class =
+                if day["date"]["day"] == 1 do
+                  "font-bold text-xl"
+                else
+                  "font-bold"
+                end %>
+
+              <table class="w-full text-xl font-bold">
+                <tbody>
+                  <tr>
+                    <td class="w-1/2 text-left ">
+                      <span class="ml-1">
+                        <%= d %>
+                      </span>
+                    </td>
+                    <td class="w-1/2 text-right ">
+                      <%= if Map.has_key?(day, "flagday") do %>
+                        <span title={"#{day["flagday"]}"} class="mr-0.5">
+                          🇸🇪&nbsp
+                        </span>
+                      <% end %>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div class="ml-1 mr-1 text-left font-medium whitespace-nowrap">
                 <%= if Map.has_key?(day, "name") do %>
                   <%= day["name"] %>
                 <% else %>
@@ -95,7 +133,7 @@ m_next = if @month == 12, do: 1, else: @month + 1 %>
               </div>
               <br />
               <br />
-              <div class="text-left align-text-bottom text-sm italic">
+              <div class="ml-1 mr-1 text-left align-text-bottom text-sm italic font-normal whitespace-nowrap">
                 <%= if Map.has_key?(day, "name_days") do %>
                   <%= Enum.join(day["name_days"], ", ") %>
                 <% else %>
