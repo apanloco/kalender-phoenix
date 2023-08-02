@@ -12,7 +12,7 @@ defmodule KalenderWeb.KalenderController do
           data = body |> Jason.decode!()
           render(conn, "index.html", layout: false, year: year, month: month, data: data)
 
-        {:ok, %HTTPoison.Response{status_code: status_code}} ->
+        {:ok, %HTTPoison.Response{status_code: _status_code}} ->
           send_resp(conn, 500, "Something went wrong")
 
         {:error, %HTTPoison.Error{reason: _reason}} ->

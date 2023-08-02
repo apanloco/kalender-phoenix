@@ -3,7 +3,30 @@ y_next = if @month == 12, do: @year + 1, else: @year
 m_prev = if @month == 1, do: 12, else: @month - 1
 m_next = if @month == 12, do: 1, else: @month + 1 %>
 
-<section class="font-semibold">
+<style>
+  .bg-gray-200-striped {
+    background: repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 3px,
+        rgba(0, 0, 0, 0.4) 4px,
+        transparent 5px
+      ),
+      rgb(229, 231, 235);
+  }
+  .bg-red-200-striped {
+    background: repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 3px,
+        rgba(0, 0, 0, 0.4) 4px,
+        transparent 5px
+      ),
+      rgb(254, 202, 202);
+  }
+</style>
+
+<section class="font-semibold text-normal">
   <!--
 ██╗   ██╗███████╗ █████╗ ██████╗ 
 ╚██╗ ██╔╝██╔════╝██╔══██╗██╔══██╗
@@ -75,8 +98,22 @@ m_next = if @month == 12, do: 1, else: @month + 1 %>
           </td>
           <%= for day <- days do %>
             <% is_same_month = day["date"]["month"] == @month
-            is_off = Map.has_key?(day, "off") %>
-            <td class={"p-0 w-5/12 border border-gray-400 #{if is_same_month == false, do: 'opacity-50 bg-gray-200'} #{if is_off == true, do: 'bg-red-200'}"}>
+            is_off = Map.has_key?(day, "off")
+
+            d_class_off =
+              if is_same_month do
+                "bg-red-200"
+              else
+                "bg-red-200-striped"
+              end
+
+            d_class_working =
+              if is_same_month do
+                ""
+              else
+                "bg-gray-200-striped"
+              end %>
+            <td class={"p-0 w-5/12 border border-gray-400 #{if is_same_month == false, do: 'opacity-50'} #{if is_off == true, do: d_class_off, else: d_class_working}"}>
               <% first_day = day["date"]["day"] == 1 %>
               <table class="w-full text-xl table-fixed">
                 <tbody>
