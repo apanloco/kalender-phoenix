@@ -2,6 +2,7 @@
 y_next = if @month == 12, do: @year + 1, else: @year
 m_prev = if @month == 1, do: 12, else: @month - 1
 m_next = if @month == 12, do: 1, else: @month + 1 %>
+
 <section class="font-semibold">
   <!--
 ██╗   ██╗███████╗ █████╗ ██████╗ 
@@ -53,7 +54,7 @@ m_next = if @month == 12, do: 1, else: @month + 1 %>
 ╚██████╗██║  ██║███████╗███████╗██║ ╚████║██████╔╝██║  ██║██║  ██║
  ╚═════╝╚═╝  ╚═╝╚══════╝╚══════╝╚═╝  ╚═══╝╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝
   -->
-  <table class="font-semibold w-10/12 text-center mx-auto table-fixed border border-gray-400">
+  <table class="font-semibold w-10/12 text-center mx-auto table-fixed">
     <thead>
       <tr>
         <td class="w-2/12 bg-gray-100 border border-gray-400">
@@ -90,7 +91,7 @@ m_next = if @month == 12, do: 1, else: @month + 1 %>
                 true ->
                   ""
               end %>
-            <td class={"w-5/12  border border-gray-400 #{bg_class}"}>
+            <td class={"p-0 w-5/12 border border-gray-400 #{bg_class}"}>
               <% d =
                 if day["date"]["day"] == 1 do
                   "#{Month.to_name(day["date"]["month"])}"
@@ -105,17 +106,15 @@ m_next = if @month == 12, do: 1, else: @month + 1 %>
                   "font-bold"
                 end %>
 
-              <table class="w-full text-xl font-bold">
+              <table class="w-full text-xl font-bold table-fixed">
                 <tbody>
                   <tr>
-                    <td class="w-1/2 text-left ">
-                      <span class="ml-1">
-                        <%= d %>
-                      </span>
+                    <td class="w-1/2 p-0 text-left">
+                      <span class="ml-1"><%= d %></span>
                     </td>
-                    <td class="w-1/2 text-right ">
+                    <td class="w-1/2 p- text-right">
                       <%= if Map.has_key?(day, "flagday") do %>
-                        <span title={"#{day["flagday"]}"} class="mr-0.5">
+                        <span title={"#{day["flagday"]}"} class="mr-0.5 text-2xl leading-4">
                           🇸🇪&nbsp
                         </span>
                       <% end %>
@@ -124,18 +123,18 @@ m_next = if @month == 12, do: 1, else: @month + 1 %>
                 </tbody>
               </table>
 
-              <div class="ml-1 mr-1 text-left font-medium whitespace-nowrap">
+              <div class="text-left font-medium whitespace-nowrap">
                 <%= if Map.has_key?(day, "name") do %>
-                  <%= day["name"] %>
+                  <span class="ml-1"><%= day["name"] %></span>
                 <% else %>
                   &nbsp
                 <% end %>
               </div>
               <br />
               <br />
-              <div class="ml-1 mb-0.5 text-left align-text-bottom text-sm italic font-normal whitespace-nowrap">
+              <div class="mb-0.5 text-left align-text-bottom text-sm italic font-normal whitespace-nowrap">
                 <%= if Map.has_key?(day, "name_days") do %>
-                  <%= Enum.join(day["name_days"], ", ") %>
+                  <span class="ml-1"><%= Enum.join(day["name_days"], ", ") %></span>
                 <% else %>
                   &nbsp
                 <% end %>
