@@ -133,7 +133,7 @@ m_next = if @month == 12, do: 1, else: @month + 1 %>
               </div>
               <br />
               <br />
-              <div class="ml-1 mr-1 text-left align-text-bottom text-sm italic font-normal whitespace-nowrap">
+              <div class="ml-1 mb-0.5 text-left align-text-bottom text-sm italic font-normal whitespace-nowrap">
                 <%= if Map.has_key?(day, "name_days") do %>
                   <%= Enum.join(day["name_days"], ", ") %>
                 <% else %>
