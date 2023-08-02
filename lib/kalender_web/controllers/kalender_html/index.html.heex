@@ -24,7 +24,7 @@ m_next = if @month == 12, do: 1, else: @month + 1 %>
           </td>
         <% end %>
         <td class="w-1/12 bg-gray-100 border border-gray-400">
-          <a href={"/#{y_prev}/#{m_prev}"} class="block">&gt;</a>
+          <a href={"/#{y_next}/#{m_next}"} class="block">&gt;</a>
         </td>
       </tr>
     </thead>
