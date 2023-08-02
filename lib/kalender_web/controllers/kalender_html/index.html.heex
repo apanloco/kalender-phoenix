@@ -52,18 +52,18 @@ m_next = if @month == 12, do: 1, else: @month + 1 %>
 ██║ ╚═╝ ██║╚██████╔╝██║ ╚████║   ██║   ██║  ██║███████║
 ╚═╝     ╚═╝ ╚═════╝ ╚═╝  ╚═══╝   ╚═╝   ╚═╝  ╚═╝╚══════╝ 
   -->
-  <table class="w-10/12 text-center mx-auto table-fixed mb-4">
+  <table class="w-10/12 text-center mx-auto table-fixed mb-4 bg-gray-100">
     <thead>
       <tr>
-        <td class="w-1/12 bg-gray-100 border border-gray-400">
+        <td class="w-1/12 border border-gray-400">
           <a href={"/#{y_prev}/#{m_prev}"} class="block">&lt;</a>
         </td>
         <%= for {m, i} <- Enum.with_index(["Januari", "Februari", "Mars", "April", "Maj", "Juni", "Juli", "Augusti", "September", "Oktober", "November", "December"], 1) do %>
-          <td class={"w-3/12 #{if i == @month, do: 'bg-blue-200', else: 'bg-gray-100'} border border-gray-400"}>
+          <td class={"w-3/12 #{if i == @month, do: 'bg-blue-200'} border border-gray-400"}>
             <a href={"/#{@year}/#{i}"} class="block"><%= m %></a>
           </td>
         <% end %>
-        <td class="w-1/12 bg-gray-100 border border-gray-400">
+        <td class="w-1/12 border border-gray-400">
           <a href={"/#{y_next}/#{m_next}"} class="block">&gt;</a>
         </td>
       </tr>
@@ -79,12 +79,12 @@ m_next = if @month == 12, do: 1, else: @month + 1 %>
   -->
   <table class="w-10/12 text-center mx-auto table-fixed">
     <thead>
-      <tr>
-        <td class="w-2/12 bg-gray-100 border border-gray-400">
+      <tr class="bg-gray-100">
+        <td class="w-2/12 border border-gray-400">
           Vecka
         </td>
         <%= for day <- ["Måndag", "Tisdag", "Onsdag", "Torsdag", "Fredag", "Lördag", "Söndag"] do %>
-          <td class="w-5/12 bg-gray-100 border border-gray-400">
+          <td class="w-5/12 border border-gray-400">
             <%= day %>
           </td>
         <% end %>
@@ -127,7 +127,7 @@ m_next = if @month == 12, do: 1, else: @month + 1 %>
                         end %>
                       </span>
                     </td>
-                    <td class="w-1/2 p- text-right">
+                    <td class="w-1/2 p-0 text-right">
                       <%= if Map.has_key?(day, "flagday") do %>
                         <span title={"#{day["flagday"]}"} class="mr-1 text-2xl leading-4">
                           🇸🇪
