@@ -75,23 +75,8 @@ m_next = if @month == 12, do: 1, else: @month + 1 %>
           </td>
           <%= for day <- days do %>
             <% is_same_month = day["date"]["month"] == @month
-            is_off = Map.has_key?(day, "off")
-
-            bg_class =
-              cond do
-                is_off == true && is_same_month == false ->
-                  "bg-red-200 opacity-50"
-
-                is_off == true && is_same_month == true ->
-                  "bg-red-200"
-
-                is_off == false && is_same_month == false ->
-                  "bg-gray-200 opacity-50"
-
-                true ->
-                  ""
-              end %>
-            <td class={"p-0 w-5/12 border border-gray-400 #{bg_class}"}>
+            is_off = Map.has_key?(day, "off") %>
+            <td class={"p-0 w-5/12 border border-gray-400 #{if is_same_month == false, do: 'opacity-50 bg-gray-200'} #{if is_off == true, do: 'bg-red-200'}"}>
               <% d =
                 if day["date"]["day"] == 1 do
                   "#{Month.to_name(day["date"]["month"])}"
