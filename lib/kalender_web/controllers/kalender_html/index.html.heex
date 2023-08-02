@@ -77,25 +77,18 @@ m_next = if @month == 12, do: 1, else: @month + 1 %>
             <% is_same_month = day["date"]["month"] == @month
             is_off = Map.has_key?(day, "off") %>
             <td class={"p-0 w-5/12 border border-gray-400 #{if is_same_month == false, do: 'opacity-50 bg-gray-200'} #{if is_off == true, do: 'bg-red-200'}"}>
-              <% d =
-                if day["date"]["day"] == 1 do
-                  "#{Month.to_name(day["date"]["month"])}"
-                else
-                  day["date"]["day"]
-                end
-
-              d_class =
-                if day["date"]["day"] == 1 do
-                  "font-bold text-xl"
-                else
-                  "font-bold"
-                end %>
-
+              <% first_day = day["date"]["day"] == 1 %>
               <table class="w-full text-xl font-bold table-fixed">
                 <tbody>
                   <tr>
                     <td class="w-1/2 p-0 text-left">
-                      <span class="ml-1"><%= d %></span>
+                      <span class="ml-1">
+                        <%= if first_day do
+                          "#{Month.to_name(day["date"]["month"])}"
+                        else
+                          day["date"]["day"]
+                        end %>
+                      </span>
                     </td>
                     <td class="w-1/2 p- text-right">
                       <%= if Map.has_key?(day, "flagday") do %>
