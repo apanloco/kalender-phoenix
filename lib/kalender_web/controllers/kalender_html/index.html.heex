@@ -92,8 +92,8 @@ m_next = if @month == 12, do: 1, else: @month + 1 %>
                     </td>
                     <td class="w-1/2 p- text-right">
                       <%= if Map.has_key?(day, "flagday") do %>
-                        <span title={"#{day["flagday"]}"} class="mr-0.5 text-2xl leading-4">
-                          🇸🇪&nbsp
+                        <span title={"#{day["flagday"]}"} class="mr-1 text-2xl leading-4">
+                          🇸🇪
                         </span>
                       <% end %>
                     </td>
