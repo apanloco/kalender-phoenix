@@ -1,7 +1,13 @@
 <% y_prev = if @month == 1, do: @year - 1, else: @year
 y_next = if @month == 12, do: @year + 1, else: @year
 m_prev = if @month == 1, do: 12, else: @month - 1
-m_next = if @month == 12, do: 1, else: @month + 1 %>
+m_next = if @month == 12, do: 1, else: @month + 1
+
+# TODO: fetch all three in one go?
+date = DateTime.utc_now()
+today_year = Map.fetch!(date, :year)
+today_month = Map.fetch!(date, :month)
+today_day = Map.fetch!(date, :day) %>
 
 <style>
   .bg-gray-200-striped {
@@ -112,14 +118,19 @@ m_next = if @month == 12, do: 1, else: @month + 1 %>
                 ""
               else
                 "bg-gray-200-striped"
-              end %>
+              end
+
+            is_today =
+              day["date"]["year"] == today_year && day["date"]["month"] == today_month &&
+                day["date"]["day"] == today_day %>
+
             <td class={"p-0 w-5/12 border border-gray-400 #{if is_same_month == false, do: 'opacity-50'} #{if is_off == true, do: d_class_off, else: d_class_working}"}>
               <% first_day = day["date"]["day"] == 1 %>
               <table class="w-full text-xl table-fixed">
                 <tbody>
                   <tr>
                     <td class="w-1/2 p-0 text-left">
-                      <span class="ml-1">
+                      <span class={"ml-1 #{if is_today == true, do: 'text-blue-500'}"}>
                         <%= if first_day do
                           "#{Month.to_name(day["date"]["month"])}"
                         else
