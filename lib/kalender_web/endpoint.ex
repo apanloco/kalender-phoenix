@@ -20,7 +20,7 @@ defmodule KalenderWeb.Endpoint do
   plug Plug.Static,
     at: "/",
     from: :kalender,
-    gzip: false,
+    gzip: true,
     only: KalenderWeb.static_paths()
 
   # Code reloading can be explicitly enabled under the
